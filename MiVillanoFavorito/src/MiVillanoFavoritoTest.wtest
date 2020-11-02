@@ -1,0 +1,80 @@
+import Villanos.*
+import Minions.*
+import Colores.*
+import Armas.*
+import Maldades.*
+import Ciudades.*
+import Objetivos.*
+
+describe "Test 1 - Equipando a los villanos" {
+	
+	var falo
+	var usoz
+	var atuchy
+	var sanMiguel
+	
+	fixture {
+		atuchy = new Minion(bananas = 10)
+		usoz = new Minion(color = violeta, bananas = 9)
+		atuchy = new Minion(bananas = 8)
+		sanMiguel = new Ciudad(temperatura = 25)
+		falo = new Villano(ejercitoDeMinions = [])
+		
+	}
+	
+	test "Falo incorpora un minion" {
+		falo.crearMinion()
+		assert.notThat(falo.ejercitoDeMinions().isEmpty())
+	}
+	
+	test "Se le otorga un Rayo Congelante a usoz" {
+		usoz.agregarArma(new Arma(nombre = "Rayo Congelante", potencia = 10))
+		assert.that(usoz.tiene("Rayo Congelante"))
+	}
+	
+	test "Alimentar a atuchy" {
+		atuchy.alimentarseCon(3)
+		assert.equals(atuchy.bananas(), 11)
+	}
+	
+	test "Nivel de concentracion de un usoz" {
+		assert.equals(usoz.nivelDeConcentracion(), 9)
+	}
+	
+	test "Nivel de concentracion de atuchy" {
+		atuchy.agregarArma(new Arma(nombre = "Rayo Congelante", potencia = 10))
+		assert.equals(atuchy.nivelDeConcentracion(), 18)
+	}
+	
+	test "Usoz es peligroso" {
+		assert.that(usoz.esPeligroso())
+	}
+	
+	test "Atuchy con armas es peligroso" {
+		atuchy.agregarArma(new Arma(nombre = "Rayo Congelante", potencia = 10))
+		atuchy.agregarArma(new Arma(nombre = "Rayo Congelante", potencia = 10))
+		atuchy.agregarArma(new Arma(nombre = "Rayo Congelante", potencia = 10))
+		assert.that(atuchy.esPeligroso())
+	}
+	
+	test "Atuchy sin armas no es peligroso" {
+		assert.notThat(atuchy.esPeligroso())
+	}
+	
+	test "Falo premia a sus minions" {
+		falo.agregarMinion(usoz)
+		falo.premiarASusMinions()
+		assert.equals(usoz.bananas(), 19)
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

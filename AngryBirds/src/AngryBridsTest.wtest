@@ -1,0 +1,51 @@
+import Pajaros.*
+import Isla.*
+
+describe "Test 1 - Pajaros" {
+
+	var faca
+	var casca
+	var lucas
+	var tito
+	var nacho
+	var judas
+
+	fixture {
+		faca = new PajaroComun(ira = 30)
+		casca = new Red(ira = 20, cantEnojos = 1)
+		lucas = new Bomb(ira = 2000)
+		tito = new Chuck(ira = 25, velocidad = 81)
+		nacho = new Terence(ira = 20, cantEnojos = 2, multiplicador = 2)
+		judas = new Matilda(ira = 30, huevos = [new Huevo(peso = 3), new Huevo(peso = 2)])
+	}
+
+	test "Fuerza de Faca" {
+		assert.equals(faca.fuerza(), 60)
+	}
+	
+	test "Fuerza de Casca" {
+		assert.equals(casca.fuerza(), 200)
+	}
+	
+	test "Fuerza de Lucas" {
+		assert.equals(lucas.fuerza(), 4000)
+	}
+	
+	test "Fuerza de Tito" {
+		assert.equals(tito.fuerza(), 155)
+	}
+	
+	test "Fuerza de Nacho" {
+		assert.equals(nacho.fuerza(), 80)
+	}
+	
+	test "Fuerza de Judas" {
+		assert.equals(judas.fuerza(), 65)
+	}
+	
+	test "Encabronar a casca" {
+		casca.enojarse()
+		assert.equals(casca.fuerza(), 800)
+	}
+	
+}

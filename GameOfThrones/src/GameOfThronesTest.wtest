@@ -1,0 +1,64 @@
+import Personajes.*
+import Casas.*
+import Acompanantes.*
+import Personalidades.*
+
+describe "Test 1 - Personajes" {
+	
+	var faca
+	var sansa
+	var lannister
+	var stark
+	
+	fixture {
+		lannister = new CasaLannister(patrimonio = 2000, miembros = [faca], ciudadDeOrigen = "SM")
+		stark = new CasaStark(patrimonio = 1100, miembros = [sansa], ciudadDeOrigen = "BV")
+		faca = new Personaje(casa = lannister, personalidad = asesinoPrecavido)
+		sansa = new Personaje(casa = stark, personalidad = sutil)
+	}
+	
+	test "Casamiento de Faca y Sansa" {
+		faca.casarseCon(sansa)
+		assert.that(faca.conyugues().contains(sansa))
+	}
+	
+	test "Patrimonio del faca" {
+		assert.equals(faca.patrimonioPersonal(), 2000)
+	}
+	
+	test "Los starks son ricos" {
+		assert.that(stark.esRica())
+	}
+}
+
+describe "Test 2 - Acompañantes" {
+	
+	var faca
+	var sansa
+	var lannister
+	var stark
+	var jakeLong
+	
+	fixture {
+		jakeLong = new Dragon()
+		lannister = new CasaLannister(patrimonio = 2000, miembros = [faca], ciudadDeOrigen = "SM")
+		stark = new CasaStark(patrimonio = 1100, miembros = [sansa], ciudadDeOrigen = "BV")
+		faca = new Personaje(casa = lannister, acompanantes = [jakeLong], personalidad = asesinoPrecavido)
+		sansa = new Personaje(casa = stark, personalidad = sutil)
+	}
+	
+	test "Sansa esta sola" {
+		assert.that(sansa.estaSolo())
+	}
+	
+	test "Faca es peligroso" {
+		assert.that(faca.esPeligroso())
+	}
+	
+	test "Aliados del faca" {
+		faca.casarseCon(sansa)
+		assert.that(faca.aliados().contains(sansa) && faca.aliados().contains(jakeLong))
+	}
+	
+
+}

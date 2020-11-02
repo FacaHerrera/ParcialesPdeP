@@ -1,0 +1,9 @@
+
+describe "group of tests" {
+
+	test "Un pirata es util para una mision" {
+	
+		assert.that(unPirata.esUtil(unaMision))
+
+	}
+}

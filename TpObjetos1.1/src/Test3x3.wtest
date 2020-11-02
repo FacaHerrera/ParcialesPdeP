@@ -1,0 +1,258 @@
+import jugadores.*
+import entrenadores.*
+import equipo.*
+import estilos.*
+import TiposEntrenador.*
+
+describe "Test 1 - Habilidades" {
+	
+	var juan
+	var aye
+	var franco
+	var pdepTeam
+	var pipeScarpa
+	
+	fixture {
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+		aye = new Jugador(altura = 167, eficaciaTriples = 35, inteligencia = 80, talento = 85, esSucio = false, estilo = pasador)
+		franco = new Jugador(altura = 200, eficaciaTriples = 10, inteligencia = 70, talento = 70, esSucio = true, estilo = rebotador)
+		pdepTeam = new Equipo(titulares = [juan, franco, aye], entrenador = pipeScarpa)
+		pipeScarpa = new Entrenador(nombre = "Felipe", apellido = "Scarpa", edad = 25, tipo = motivador)
+		
+	}
+	
+	test "Habilidad de Juan" {
+
+		assert.equals(juan.habilidad(), 108.375)
+
+	}
+	
+	test "Habilidad de Franco" {
+
+		assert.equals(franco.habilidad(), 96)
+
+	}
+	
+	test "Habilidad de Aye" {
+
+		assert.equals(aye.habilidad(), 45.32)
+
+	}
+}
+
+describe "Test 2 - Cracks" {
+	
+	var juan
+	var aye
+	var franco
+	
+	fixture {
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+		aye = new Jugador(altura = 167, eficaciaTriples = 35, inteligencia = 80, talento = 85, esSucio = false, estilo = pasador)
+		franco = new Jugador(altura = 200, eficaciaTriples = 10, inteligencia = 70, talento = 70, esSucio = true, estilo = rebotador)
+		
+	}
+	
+	test "Juan es crack" {
+		assert.that(juan.esCrack())
+	}
+	
+	test "Aye no es crack" {
+		assert.notThat(aye.esCrack())
+	}
+	
+}
+
+describe "Test 3 - LeBron King James " {
+	
+	var kingJames
+	var juan
+	
+	fixture {
+		kingJames = new Jugador(altura = 700, eficaciaTriples = 90, inteligencia = 95, talento = 90, esSucio = true, estilo = pasador)
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+	}
+	
+	test "LeBron es una leyenda" {
+		assert.that(kingJames.esLeyenda())
+	}
+	
+	test "Juan no es leyenda" {
+		assert.notThat(juan.esLeyenda())
+	}
+}
+
+describe "Test 4 - Entrenando a Aye" {
+	var juan
+	var franco
+	var aye
+	var pipeScarpa
+	var pdepTeam
+	
+	fixture {
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+		aye = new Jugador(altura = 167, eficaciaTriples = 35, inteligencia = 80, talento = 85, esSucio = false, estilo = pasador)
+		franco = new Jugador(altura = 200, eficaciaTriples = 10, inteligencia = 70, talento = 70, esSucio = true, estilo = rebotador)
+		pipeScarpa = new Entrenador(nombre = "Felipe", apellido = "Scarpa", edad = 25, tipo = motivador)
+		pdepTeam = new Equipo(titulares = [juan, franco, aye], entrenador = pipeScarpa)
+		pipeScarpa.entrenarA(aye)
+	}
+	
+	test "Aye redujo su stamina" {
+		
+		assert.equals(aye.stamina(), 95)
+	}
+	
+	test "Aye redujo su habilidad" {
+		
+		assert.equals(aye.habilidad(), 41.38)
+	}
+}
+
+describe "Test 4 - Entrenando a Aye x2" {
+	var juan
+	var franco
+	var aye
+	var pipeScarpa
+	var pdepTeam
+	
+	fixture {
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+		aye = new Jugador(altura = 167, eficaciaTriples = 35, inteligencia = 80, talento = 85, esSucio = false, estilo = pasador)
+		franco = new Jugador(altura = 200, eficaciaTriples = 10, inteligencia = 70, talento = 70, esSucio = true, estilo = rebotador)
+		pipeScarpa = new Entrenador(nombre = "Felipe", apellido = "Scarpa", edad = 25, tipo = motivador)
+		pdepTeam = new Equipo(titulares = [juan, franco, aye], entrenador = pipeScarpa)
+		2.times({_ => pipeScarpa.entrenarA(aye)})
+	}
+	
+	test "Aye redujo su habilidad" {
+		
+		assert.equals(aye.habilidad(), 37.546)
+	}
+}
+
+describe "Test 4 - Entrenando a Aye x2 y recuperando a Aye" {
+	var juan
+	var franco
+	var aye
+	var pipeScarpa
+	var pdepTeam
+	
+	fixture {
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+		aye = new Jugador(altura = 167, eficaciaTriples = 35, inteligencia = 80, talento = 85, esSucio = false, estilo = pasador)
+		franco = new Jugador(altura = 200, eficaciaTriples = 10, inteligencia = 70, talento = 70, esSucio = true, estilo = rebotador)
+		pipeScarpa = new Entrenador(nombre = "Felipe", apellido = "Scarpa", edad = 25, tipo = motivador)
+		pdepTeam = new Equipo(titulares = [juan, franco, aye], entrenador = pipeScarpa)
+		2.times({_ => pipeScarpa.entrenarA(aye)})
+		aye.recuperarStaminaEn(20)
+	}
+	
+	test "Aye redujo su habilidad" {
+		
+		assert.equals(aye.habilidad(), 47.546)
+	}
+}
+
+describe "Test 5 - Valoracion total del PdePTeam" {
+	var juan
+	var franco
+	var aye
+	var pipeScarpa
+	var pdepTeam
+	
+	fixture {
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+		aye = new Jugador(altura = 167, eficaciaTriples = 35, inteligencia = 80, talento = 85, esSucio = false, estilo = pasador)
+		franco = new Jugador(altura = 200, eficaciaTriples = 10, inteligencia = 70, talento = 70, esSucio = true, estilo = rebotador)
+		pipeScarpa = new Entrenador(nombre = "Felipe", apellido = "Scarpa", edad = 25, tipo = motivador)
+		pdepTeam = new Equipo(titulares = [juan, franco, aye], entrenador = pipeScarpa)
+	}
+	
+	test "Valoracion total del PdepTeam" {
+		assert.equals(pdepTeam.valoracionTotal(), 83.23167)
+	}
+}
+
+describe "Test 6 - Caruso vendehumo Lombardi" {
+	var juan
+	var aye
+	var carusoLombardi
+	var lakers
+	var kingJames
+	
+	
+	fixture {
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+		aye = new Jugador(altura = 167, eficaciaTriples = 35, inteligencia = 80, talento = 85, esSucio = false, estilo = pasador)
+		kingJames = new Jugador(altura = 700, eficaciaTriples = 90, inteligencia = 95, talento = 90, esSucio = true, estilo = pasador)
+		carusoLombardi = new Entrenador(nombre = "Ricardo", apellido = "Caruso Lombardi", edad = 48, tipo = vendehumo)
+		lakers = new Equipo(titulares = [kingJames, juan, aye], entrenador = carusoLombardi)
+	}
+	
+	test "Valoracion total de los lakers" {
+		assert.equals(lakers.valoracionTotal(), 120.66459)
+	}
+}
+
+describe "Test 7 - Caruso con pdepTeam" {
+	var juan
+	var franco
+	var aye
+	var carusoLombardi
+	var pdepTeam
+	
+	fixture {
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+		aye = new Jugador(altura = 167, eficaciaTriples = 35, inteligencia = 80, talento = 85, esSucio = false, estilo = pasador)
+		franco = new Jugador(altura = 200, eficaciaTriples = 10, inteligencia = 70, talento = 70, esSucio = true, estilo = rebotador)
+		carusoLombardi = new Entrenador(nombre = "Felipe", apellido = "Scarpa", edad = 25, tipo = vendehumo)
+		pdepTeam = new Equipo(titulares = [juan, franco, aye], entrenador = carusoLombardi)
+	}
+	
+	test "Valoracion total con caruso" {
+		assert.equals(pdepTeam.valoracionTotal(), 70.74692)
+	}
+}
+
+describe "Test 8 - Becky Hammon, la nueva entrenadora" {
+	var beckyHammon
+	var juan
+	var aye
+	var franco
+	var pdepTeam
+	
+	fixture {
+		juan = new Jugador(altura = 180, eficaciaTriples = 60, inteligencia = 30, talento = 60, esSucio = true, estilo = tirador)
+		aye = new Jugador(altura = 167, eficaciaTriples = 35, inteligencia = 80, talento = 85, esSucio = false, estilo = pasador)
+		franco = new Jugador(altura = 200, eficaciaTriples = 10, inteligencia = 70, talento = 70, esSucio = true, estilo = rebotador)
+		beckyHammon = new Entrenador(nombre = "Becky", apellido = "Hammon", edad = 43, tipo = fino)
+		pdepTeam = new Equipo(titulares = [juan, franco, aye], entrenador = beckyHammon)
+		beckyHammon.entrenamientoDe(pdepTeam)
+	}
+	
+	test "Aye se convierte en tiradora" {
+		assert.equals(aye.estilo(), tirador)
+	}
+	
+	test "Franco se convierte en tirador" {
+		assert.equals(franco.estilo(), tirador)
+	}
+	
+	test "Valoracion total con Becky" {
+		assert.equals(pdepTeam.valoracionTotal(), 132.36708)
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

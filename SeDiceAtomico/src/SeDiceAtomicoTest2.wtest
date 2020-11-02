@@ -1,0 +1,47 @@
+import ciudades.*
+import turbinas.*
+import centrales.*
+import region.*
+
+describe "group of tests" {
+
+	test "Burns con 10 varillas produce 1 mkwh en springfield" {
+		centralAtomicaBurns.cantidadVarillas(10)
+		
+		assert.equals(centralAtomicaBurns.produccionEnergetica(), 1)
+
+	}
+	
+	test "exBosque con capacidad 20 produce 18.5 mkwh en springfield" {
+		centralCarbonExBosque.capacidad(20)
+		
+		assert.equals(centralCarbonExBosque.produccionEnergetica(), 18.5)
+	}
+	
+	test "El suspiro produce 2 en springfield" {
+		
+		assert.equals(centralEolicaSuspiro.produccionEnergetica(), 2)
+	}
+	
+	test "Centrales contaminantes en springfield es solo exBosque" {
+		assert.equals(springfield.centralesContaminantes(), [centralCarbonExBosque])
+	}
+	
+	test "Springfield cubrio sus necesidades energeticas" {
+		springfield.produccionNecesaria(20)
+		centralCarbonExBosque.capacidad(20)
+		assert.that(springfield.cubrioSusNecesidades())
+	}
+	
+	test "Springfield esta en el horno si necesita 30 de produccion" {
+		springfield.produccionNecesaria(30)
+		centralCarbonExBosque.capacidad(20)
+		assert.that(springfield.estaEnElHorno())
+	}
+	
+	test "Centrales mas productoras de la region son exBosque e hidroelectrica" {
+		centralCarbonExBosque.capacidad(20)
+		centralAtomicaBurns.cantidadVarillas(10)
+		assert.equals(regionSimpsons.centralesMasProductoras(), [centralCarbonExBosque, centralHidroelectrica])
+	}
+}

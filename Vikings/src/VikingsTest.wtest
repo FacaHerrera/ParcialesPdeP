@@ -1,0 +1,91 @@
+import Expediciones.*
+import Locaciones.*
+import Vikingos.*
+
+describe "Punto 1 - TEST" {
+	var faca
+	var casca
+	var judas
+	var sagui
+	
+	fixture {
+		faca = new Soldado(castaSocial = thrall, armas = 10, victimas = 25, dinero = 0)
+		casca = new Soldado(castaSocial = karl, armas = 5, victimas = 17, dinero = 0)
+		judas = new Granjero(castaSocial = karl, hijos = 3, hectareas = 7, dinero = 0)
+		sagui = new Granjero(castaSocial = thrall, hijos = 4, hectareas = 2, dinero = 0)
+	}
+
+	test "Faca puede subirse a una expedicion" {
+		assert.that(faca.puedeSubirAExpedicion())
+	}
+	
+	test "Casca no puede ir a una expedicion" {
+		assert.notThat(casca.puedeSubirAExpedicion())
+	}
+	
+	test "Judas puede subirse a una expedicion" {
+		assert.that(judas.puedeSubirAExpedicion())
+	}
+	
+	test "Sagui no puede ir a una expedicion" {
+		assert.notThat(sagui.puedeSubirAExpedicion())
+	}
+}
+
+describe "Punto 2 - TEST" {
+	var expedicion1
+	var aldea1
+	var capital1
+	var iglesia1
+	var faca
+	var judas
+	
+	fixture {
+		iglesia1 = new Iglesia(cantidadCrucifijos = 20)
+		aldea1 = new Aldea(iglesias = [iglesia1])
+		capital1 = new Capital(factorRiqueza = 50, defensores = 20)
+		faca = new Soldado(castaSocial = thrall, armas = 10, victimas = 25, dinero = 0)
+		judas = new Granjero(castaSocial = karl, hijos = 3, hectareas = 7, dinero = 0)
+		expedicion1 = new Expedicion(aldeasInvolucradas = [aldea1], capitalesInvolucradas = [capital1], vikingos = [faca, judas])
+	}
+	
+	test "La expedicion1 vale la pena" {
+		assert.that(expedicion1.expedicionValeLaPena())
+	}
+}
+
+describe "Punto 3 - TEST" {
+	var expedicion1
+	var aldea1
+	var capital1
+	var iglesia1
+	var faca
+	var judas
+	
+	fixture {
+		iglesia1 = new Iglesia(cantidadCrucifijos = 20)
+		aldea1 = new Aldea(iglesias = [iglesia1])
+		capital1 = new Capital(factorRiqueza = 50, defensores = 20)
+		faca = new Soldado(castaSocial = thrall, armas = 10, victimas = 25, dinero = 0)
+		judas = new Granjero(castaSocial = karl, hijos = 3, hectareas = 7, dinero = 0)
+		expedicion1 = new Expedicion(aldeasInvolucradas = [aldea1], capitalesInvolucradas = [capital1], vikingos = [faca, judas])
+	}
+	
+	test "Realizar expedicion para faca" {
+		expedicion1.realizarse()
+		assert.equals(faca.dinero(), 36)
+	}
+}
+
+describe "Punto 5 - TEST" {
+	var ragnar
+	
+	fixture {
+		ragnar = new Soldado(castaSocial = karl, armas = 10, victimas = 25, dinero = 0)
+	}
+	
+	test "Ragnar escala adecuadamente" {
+		ragnar.ascender()
+		assert.equals(ragnar.castaSocial(), thrall)
+	}
+}
