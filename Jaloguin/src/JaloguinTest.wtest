@@ -1,0 +1,23 @@
+import Ninios.*
+import Elementos.*
+import Adultos.*
+
+describe "Test 1 - Sustos" {
+	
+	var faca
+	var judas
+	var casca
+	
+	fixture {
+		faca = new Ninio(elementos = [new Traje(tipo = terrorifico), maquillaje], actitudInicial = 10, caramelos = 0)
+		casca = new Ninio(elementos = [new Traje(tipo = terrorifico), maquillaje], actitudInicial = 5, caramelos = 16)
+		judas = new Adulto(previosIntentosDeSustos = [casca])
+	}
+	
+	test "Faca asusta al judas" {
+		
+		faca.asustarA(judas)
+		assert.equals(faca.caramelos(), 5)
+
+	}
+}
